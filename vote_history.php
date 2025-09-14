@@ -42,7 +42,7 @@ while ($row = $result->fetch_assoc()) {
   <style>
     body {
       font-family: 'Inter', sans-serif;
-      background: linear-gradient(135deg, #1e3a8a, #2563eb, #3b82f6);
+      background: linear-gradient(135deg, #ffffffff, #ffffffff, #ffffffff);
       color: white;
       min-height: 100vh;
       margin: 0;

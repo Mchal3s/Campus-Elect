@@ -73,7 +73,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-  * {
+    * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
@@ -81,55 +81,62 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     
     body {
       font-family: 'Inter', sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      background: linear-gradient(135deg, #ffffffff 0%, #ffffffff 50%, #ffffffff 100%);
+      color: black;
+      text-align: center;
       min-height: 100vh;
-      margin: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow-x: hidden;
       position: relative;
-      overflow: hidden;
     }
 
-    /* Particle Container */
-    #particles-container {
-      position: fixed;
-      top: 0;
+    /* Background matching the first code */
+    .background-elements {
+      position: absolute; 
+      top: 0; 
       left: 0;
-      width: 100%;
+      width: 100%; 
       height: 100%;
-      z-index: -1;
-      background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 50%, #1e40af 100%);
+      z-index: -1; 
       overflow: hidden;
     }
-
-    /* Individual Particle */
-    .particle {
-      position: absolute;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.6);
-      box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-      animation: float 15s infinite linear;
+    
+    .floating-icon {
+      position: absolute; 
+      opacity: 0.15;
+      color: black; 
+      font-size: 3rem;
+      animation: float 20s infinite linear;
     }
-
-    /* Particle Animation */
+    
     @keyframes float {
-      0% { transform: translateY(0) translateX(0); opacity: 0; }
-      10% { opacity: 0.8; }
-      90% { opacity: 0.8; }
-      100% { transform: translateY(-100vh) translateX(20vw); opacity: 0; }
+      0% { transform: translateY(0) translateX(0) rotate(0deg); }
+      50% { transform: translateY(-15vh) translateX(15vw) rotate(180deg); }
+      100% { transform: translateY(0) translateX(0) rotate(360deg); }
     }
 
-    /* Building Silhouettes */
-    .buildings {
+    /* Back button */
+    #back-button {
       position: absolute;
-      bottom: 0;
-      width: 100%;
-      height: 30%;
-      background-image: 
-        linear-gradient(to top, rgba(30, 58, 138, 0.8) 0%, transparent 100%),
-        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 200' fill='%231e3a8a'%3E%3Cpath d='M0,200 L0,50 L50,50 L50,150 L100,150 L100,100 L150,100 L150,150 L200,150 L200,75 L250,75 L250,200 L300,200 L300,50 L350,50 L350,125 L400,125 L400,200 L450,200 L450,100 L500,100 L500,200 L550,200 L550,50 L600,50 L600,150 L650,150 L650,100 L700,100 L700,200 L750,200 L750,75 L800,75 L800,150 L850,150 L850,50 L900,50 L900,200 L950,200 L950,125 L1000,125 L1000,200 L1050,200 L1050,100 L1100,100 L1100,150 L1150,150 L1150,75 L1200,75 L1200,200 Z'/%3E%3C/svg%3E");
-      background-size: 100% 100%;
-      z-index: -1;
+      top: 20px;
+      left: 20px;
+      z-index: 10;
+    }
+    
+    #back-button a {
+      color: #6b6969ff;
+      text-decoration: none;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    
+    #back-button a:hover {
+      color: #06dc74ff;
     }
 
     /* Login Card */
@@ -141,7 +148,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
       width: 400px;
       backdrop-filter: blur(10px);
       border: 1px solid rgba(255, 255, 255, 0.2);
-      position: relative;
     }
     
     h2 {
@@ -178,7 +184,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
     
     .btn {
-      background: #2563eb;
+      background: #444343ff;
       color: #fff;
       padding: 12px;
       border: none;
@@ -186,12 +192,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
       border-radius: 8px;
       cursor: pointer;
       font-weight: 500;
-      transition: background 0.3s;
+      transition: all 0.3s;
       margin-top: 10px;
     }
     
     .btn:hover {
-      background: #1d4ed8;
+      background: #06dc74ff;
+      transform: scale(1.05);
     }
     
     .error {
@@ -231,7 +238,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
     
     .logo h1 {
-      color: #2563eb;
+      color: #6b6969ff;
       font-size: 2rem;
       font-weight: 700;
     }
@@ -243,12 +250,17 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
   </style>
 </head>
 <body>
-  <div id="back-button">
-   <p><a href="landing.php">Back</a></p>
+  <!-- Background matching the first code -->
+  <div class="background-elements">
+    <i class="floating-icon fas fa-vote-yea" style="top: 20%; left: 10%;"></i>
+    <i class="floating-icon fas fa-check-circle" style="top: 60%; left: 80%;"></i>
+    <i class="floating-icon fas fa-box-ballot" style="top: 40%; left: 50%;"></i>
   </div>
-  
-  <div id="particles-container"></div>
-  <div class="buildings"></div>
+
+  <!-- Back button -->
+  <div id="back-button">
+    <p><a href="landing.php"><i class="fas fa-arrow-left"></i> Back to Home</a></p>
+  </div>
 
   <div class="card">
     <div class="logo">
@@ -306,21 +318,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
       const role = document.getElementById('roleSelect').value;
       document.getElementById('adminProctorFields').style.display = (role === "student") ? "none" : "block";
       document.getElementById('studentFields').style.display = (role === "student") ? "block" : "none";
-    }
-    window.onload = function() { createParticles(); };
-    function createParticles() {
-      const container = document.getElementById('particles-container');
-      for (let i = 0; i < 40; i++) {
-        const particle = document.createElement('div');
-        particle.classList.add('particle');
-        const size = Math.random() * 5 + 2;
-        particle.style.width = `${size}px`;
-        particle.style.height = `${size}px`;
-        particle.style.left = `${Math.random() * 100}vw`;
-        particle.style.animationDelay = `${Math.random() * 15}s`;
-        particle.style.animationDuration = `${15 + Math.random() * 10}s`;
-        container.appendChild(particle);
-      }
     }
   </script>
 </body>

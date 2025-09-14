@@ -2,387 +2,695 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>eVOTE - School Voting System</title>
+  <title>Campus Elect - School Voting System</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+    :root {
+      --primary: #2563eb;
+      --primary-dark: #1d4ed8;
+      --secondary: #06dc74;
+      --dark: #1e293b;
+      --light: #f8fafc;
+      --gray: #64748b;
+      --light-gray: #e2e8f0;
+      --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+      --transition: all 0.3s ease;
+    }
+    
+    * { 
+      margin: 0; 
+      padding: 0; 
+      box-sizing: border-box; 
     }
 
     body {
       font-family: 'Inter', sans-serif;
-      background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 50%, #3b82f6 100%);
-      color: white;
+      background-color: var(--light);
+      color: var(--dark);
+      text-align: center;
+      min-height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
-      min-height: 100vh;
-      justify-content: center;
-      text-align: center;
       overflow-x: hidden;
-      position: relative;
+      line-height: 1.6;
     }
 
-    /* Animated Background Elements */
+    /* Background elements */
     .background-elements {
-      position: absolute;
-      top: 0;
+      position: fixed; 
+      top: 0; 
       left: 0;
-      width: 100%;
+      width: 100%; 
       height: 100%;
-      z-index: -1;
+      z-index: -1; 
       overflow: hidden;
     }
-
+    
     .floating-icon {
-      position: absolute;
-      opacity: 0.1;
-      color: white;
-      font-size: 2rem;
-      animation: float 15s infinite linear;
+      position: absolute; 
+      opacity: 0.05;
+      color: var(--primary); 
+      font-size: 3rem;
+      animation: float 20s infinite linear;
     }
-
+    
     @keyframes float {
       0% { transform: translateY(0) translateX(0) rotate(0deg); }
-      25% { transform: translateY(-20vh) translateX(10vw) rotate(90deg); }
-      50% { transform: translateY(10vh) translateX(20vw) rotate(180deg); }
-      75% { transform: translateY(20vh) translateX(-10vw) rotate(270deg); }
+      50% { transform: translateY(-15vh) translateX(15vw) rotate(180deg); }
       100% { transform: translateY(0) translateX(0) rotate(360deg); }
     }
 
-    /* Header Styles */
+    /* Header */
     header {
-      margin-top: 40px;
-      margin-bottom: 40px;
-      animation: fadeIn 1s ease-out;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(-20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    header h1 {
-      font-size: 3rem;
-      font-weight: 700;
-      margin: 0;
-      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-    }
-
-    header p {
-      margin-top: 10px;
-      font-size: 1.2rem;
-      opacity: 0.85;
-    }
-
-    /* Login Button */
-    .login-btn {
+      margin-bottom: 30px;
+      width: 100%;
+      padding: 20px 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       background: #fff;
-      color: #2563eb;
-      border: none;
-      padding: 16px 40px;
-      border-radius: 12px;
-      font-weight: 600;
-      font-size: 1.1rem;
-      cursor: pointer;
-      transition: all 0.3s;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-left h1 {
+      font-size: 1.8rem;
+      margin: 0;
+      color: var(--primary);
+      font-weight: 700;
+    }
+
+    .header-left p {
+      margin: 5px 0 0;
+      font-size: 0.9rem;
+      color: var(--gray);
+      font-weight: 500;
+    }
+    
+    /* Hero section */
+    .hero {
+      width: 100%;
+      padding: 80px 20px;
+      background: linear-gradient(135deg, rgba(37, 99, 235, 0.03) 0%, rgba(6, 220, 116, 0.03) 100%);
       position: relative;
       overflow: hidden;
-      z-index: 1;
     }
-
-    .login-btn:hover {
-      background: #f3f4f6;
-      transform: translateY(-3px);
-      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    
+    .hero-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
-
-    .login-btn:active {
-      transform: translateY(1px);
+    
+    .hero h1 {
+      font-size: 2.8rem;
+      margin-bottom: 20px;
+      font-weight: 800;
+      color: var(--dark);
+      line-height: 1.2;
     }
-
-    .login-btn::before {
-      content: '';
+    
+    .hero p {
+      font-size: 1.2rem;
+      color: var(--gray);
+      max-width: 800px;
+      margin-bottom: 30px;
+    }
+    
+    .hero-cta {
+      display: flex;
+      gap: 20px;
+      margin-top: 20px;
+    }
+    
+    /* Notice section */
+    .notice {
+      width: 100%;
+      padding: 100px 20px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      background: url("Head.jpg") no-repeat center center;
+      background-size: cover;
+      color: white;
+    }
+    
+    .notice::after {
+      content: "";
       position: absolute;
-      top: 0;
-      left: -100%;
+      top: 0; 
+      left: 0; 
+      right: 0; 
+      bottom: 0;
+      background: rgba(255, 255, 255, 0.85);
+      z-index: 0;
+    }
+    
+    .notice-content {
+      position: relative;
+      z-index: 1;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .notice h1 {
+      color: var(--dark);
+      font-size: 2.2rem;
+      margin-bottom: 25px;
+      font-weight: 700;
+    }
+
+    .notice p {
+      color: var(--dark);
+      font-size: 1.2rem;
+      margin: 15px 0;
+      font-weight: 500;
+    }
+    
+    .notice-highlight {
+      background: linear-gradient(120deg, var(--primary) 0%, var(--secondary) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-weight: 700;
+    }
+
+    /* Login button */
+    .login-btn {
+      background: var(--primary); 
+      color: white;
+      padding: 16px 40px;
+      border-radius: 12px; 
+      font-weight: 600;
+      font-size: 1.1rem; 
+      cursor: pointer;
+      border: none;
+      transition: var(--transition);
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: var(--card-shadow);
+    }
+    
+    .login-btn:hover { 
+      background: var(--primary-dark); 
+      transform: translateY(-2px); 
+      box-shadow: 0 10px 25px -5px rgba(37, 99, 235, 0.3);
+    }
+    
+    /* Gallery section */
+    .gallery-section {
+      width: 100%;
+      padding: 80px 0;
+      background: var(--light);
+    }
+    
+    .section-title {
+      font-size: 2.2rem;
+      margin-bottom: 50px;
+      color: var(--dark);
+      font-weight: 700;
+      position: relative;
+      display: inline-block;
+    }
+    
+    .section-title::after {
+      content: "";
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 4px;
+      background: linear-gradient(to right, var(--primary), var(--secondary));
+      border-radius: 2px;
+    }
+    
+    .gallery-container {
+      width: 100%;
+      overflow: hidden;
+      position: relative;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    
+    .gallery-track {
+      display: flex;
+      gap: 25px;
+      padding: 0 20px;
+    }
+    
+    .gallery-item {
+      flex: 0 0 auto;
+      width: 320px;
+      height: 220px;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: var(--card-shadow);
+      transition: var(--transition);
+      position: relative;
+    }
+    
+    .gallery-item:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+    }
+    
+    .gallery-item img {
       width: 100%;
       height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
-      transition: 0.5s;
-      z-index: -1;
+      object-fit: cover;
+      transition: var(--transition);
     }
-
-    .login-btn:hover::before {
-      left: 100%;
+    
+    .gallery-item:hover img {
+      transform: scale(1.05);
     }
-
-    /* Dynamic Section */
-    .dynamic-section {
-      margin-top: 60px;
-      max-width: 600px;
-      background: rgba(255,255,255,0.1);
-      padding: 25px;
-      border-radius: 16px;
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255,255,255,0.2);
-      animation: slideUp 1s ease-out;
+    
+    .gallery-controls {
+      margin-top: 40px;
+      display: flex;
+      justify-content: center;
+      gap: 15px;
     }
-
-    @keyframes slideUp {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .dynamic-section h2 {
-      margin-bottom: 15px;
-      font-size: 1.5rem;
+    
+    .gallery-control-btn {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 12px 25px;
+      border-radius: 8px;
+      cursor: pointer;
       font-weight: 600;
+      transition: var(--transition);
       display: flex;
       align-items: center;
-      justify-content: center;
-      gap: 10px;
+      gap: 8px;
     }
-
-    .dynamic-section p {
-      font-size: 1rem;
-      line-height: 1.6;
-      opacity: 0.9;
+    
+    .gallery-control-btn:hover {
+      background: var(--primary-dark);
+      transform: translateY(-2px);
     }
-
-    /* Features Section */
-    .features {
+    
+    /* About section */
+    .about {
+      max-width: 1000px;
+      margin: 60px auto;
+      padding: 50px;
+      background: white;
+      border-radius: 20px;
+      box-shadow: var(--card-shadow);
+    }
+    
+    .about h2 { 
+      margin-bottom: 25px; 
+      font-size: 2rem; 
+      color: var(--dark);
+    }
+    
+    .about p { 
+      font-size: 1.1rem; 
+      line-height: 1.8; 
+      color: var(--gray);
+    }    
+    
+    /* Steps section */
+    .steps-section {
+      width: 100%;
+      padding: 80px 20px;
+      background: linear-gradient(135deg, rgba(37, 99, 235, 0.03) 0%, rgba(6, 220, 116, 0.03) 100%);
+    }
+    
+    .steps {
       display: flex;
       justify-content: center;
       gap: 30px;
       margin-top: 50px;
       flex-wrap: wrap;
-      animation: fadeIn 1.5s ease-out;
+      max-width: 1200px;
+      margin: 50px auto 0;
     }
-
-    .feature {
-      background: rgba(255,255,255,0.1);
-      padding: 20px;
-      border-radius: 12px;
-      width: 160px;
-      backdrop-filter: blur(5px);
-      border: 1px solid rgba(255,255,255,0.15);
-      transition: transform 0.3s;
+    
+    .step {
+      background: white;
+      padding: 30px 25px;
+      border-radius: 16px;
+      width: 250px;
+      text-align: center;
+      box-shadow: var(--card-shadow);
+      transition: var(--transition);
     }
-
-    .feature:hover {
+    
+    .step:hover {
       transform: translateY(-5px);
     }
-
-    .feature i {
-      font-size: 2rem;
-      margin-bottom: 10px;
-      color: #93c5fd;
+    
+    .step-icon {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+      color: white;
+      font-size: 1.8rem;
     }
-
-    .feature h3 {
-      font-size: 1rem;
-      margin-bottom: 5px;
+    
+    .step h3 { 
+      font-size: 1.3rem; 
+      margin-bottom: 12px; 
+      color: var(--dark);
+    }
+    
+    .step p { 
+      font-size: 1rem; 
+      color: var(--gray);
     }
 
     /* Footer */
     footer {
-      margin-top: 60px;
-      padding: 20px;
+      margin-top: 100px;
+      padding: 30px;
       font-size: 0.9rem;
-      opacity: 0.7;
+      color: var(--gray);
+      background: var(--dark);
+      width: 100%;
     }
-
-    /* Countdown Timer */
-    .countdown {
-      display: flex;
-      justify-content: center;
-      gap: 15px;
-      margin-top: 20px;
+    
+    footer p {
+      color: white;
     }
-
-    .countdown-item {
-      background: rgba(255,255,255,0.15);
-      padding: 10px;
-      border-radius: 8px;
-      min-width: 60px;
-    }
-
-    .countdown-number {
-      font-size: 1.8rem;
-      font-weight: 700;
-    }
-
-    .countdown-label {
-      font-size: 0.7rem;
-      text-transform: uppercase;
-      margin-top: 5px;
-    }
-
-    /* Responsive Design */
-    @media (max-width: 768px) {
-      header h1 {
+    
+    /* Responsive design */
+    @media (max-width: 992px) {
+      .hero h1 {
         font-size: 2.2rem;
       }
       
-      .features {
-        gap: 15px;
-      }
-      
-      .feature {
-        width: 140px;
-        padding: 15px;
-      }
-      
-      .dynamic-section {
-        margin: 20px;
-        padding: 20px;
-      }
-    }
-
-    @media (max-width: 480px) {
-      header h1 {
+      .notice h1 {
         font-size: 1.8rem;
       }
       
-      header p {
+      .step {
+        width: 220px;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+      }
+      
+      .hero h1 {
+        font-size: 1.8rem;
+      }
+      
+      .hero p {
         font-size: 1rem;
       }
       
-      .login-btn {
-        padding: 14px 30px;
+      .notice {
+        padding: 60px 20px;
+      }
+      
+      .notice h1 {
+        font-size: 1.6rem;
+      }
+      
+      .notice p {
         font-size: 1rem;
       }
       
-      .feature {
-        width: 120px;
+      .about {
+        padding: 30px 20px;
+        margin: 40px 20px;
       }
       
-      .countdown {
-        gap: 10px;
+      .steps {
+        gap: 20px;
       }
       
-      .countdown-item {
-        min-width: 50px;
-        padding: 8px;
+      .step {
+        width: 100%;
+        max-width: 300px;
       }
       
-      .countdown-number {
-        font-size: 1.5rem;
+      .gallery-item {
+        width: 280px;
+        height: 200px;
+      }
+    }
+    
+    @media (max-width: 576px) {
+      .hero-cta {
+        flex-direction: column;
+      }
+      
+      .gallery-controls {
+        flex-direction: column;
+        align-items: center;
       }
     }
   </style>
 </head>
 <body>
-  <!-- Animated Background Elements -->
+  <!-- Background -->
   <div class="background-elements">
-    <i class="floating-icon fas fa-vote-yea" style="top: 20%; left: 10%; animation-delay: 0s;"></i>
-    <i class="floating-icon fas fa-ballot" style="top: 60%; left: 80%; animation-delay: 2s;"></i>
-    <i class="floating-icon fas fa-check-circle" style="top: 30%; left: 70%; animation-delay: 2s;"></i>
-    <i class="floating-icon fas fa-democrat" style="top: 70%; left: 20%; animation-delay: 1s;"></i>
-    <i class="floating-icon fas fa-republican" style="top: 10%; left: 50%; animation-delay: 2s;"></i>
-    <i class="floating-icon fas fa-balance-scale" style="top: 80%; left: 60%; animation-delay: 1s;"></i>
+    <i class="floating-icon fas fa-vote-yea" style="top: 20%; left: 10%;"></i>
+    <i class="floating-icon fas fa-check-circle" style="top: 60%; left: 80%;"></i>
+    <i class="floating-icon fas fa-box-ballot" style="top: 40%; left: 50%;"></i>
+    <i class="floating-icon fas fa-lock" style="top: 75%; left: 15%;"></i>
+    <i class="floating-icon fas fa-user-shield" style="top: 30%; left: 85%;"></i>
   </div>
 
+  <!-- Header -->
   <header>
-    <h1>Welcome to Campus Elect</h1>
-    <p>Secure School Voting System</p>
+    <div class="header-left">
+      <h1>Campus Elect</h1>
+      <p>Secure School Voting System</p>
+    </div>
+    <button class="login-btn" onclick="window.location.href='login.php'">
+      <i class="fas fa-lock"></i> Login to Vote
+    </button>
   </header>
 
-  <button class="login-btn" onclick="window.location.href='login.php'">
-    <i class="fas fa-lock"></i> Login to Vote
-  </button>
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Modern Voting for <span class="notice-highlight">Modern Education</span></h1>
+      <p>Empowering schools with secure, transparent, and accessible digital voting solutions powered by facial recognition technology.</p>
+    </div>
+  </section>
 
-  <div class="dynamic-section">
-    <h2><i class="fas fa-bullhorn"></i> Announcements</h2>
-    <p>Voting will be announced for <strong>Further Updates</strong>. Please ensure you are registered as a student to participate in the elections.</p>
-    
-    <div class="countdown">
-      <div class="countdown-item">
-        <div class="countdown-number" id="days">00</div>
-        <div class="countdown-label">Days</div>
-      </div>
-      <div class="countdown-item">
-        <div class="countdown-number" id="hours">00</div>
-        <div class="countdown-label">Hours</div>
-      </div>
-      <div class="countdown-item">
-        <div class="countdown-number" id="minutes">00</div>
-        <div class="countdown-label">Minutes</div>
-      </div>
-      <div class="countdown-item">
-        <div class="countdown-number" id="seconds">00</div>
-        <div class="countdown-label">Seconds</div>
-      </div>
+  <!-- Notice Section -->
+  <section class="notice">
+    <div class="notice-content">
+      <h1>Election System Utilizing Face Recognition Technology</h1>
+      <p>Provides excellency and reliability in ballot samples while conserving user identity.</p>
+      <p>Amplifying efficiency for voting timeframes to match various schedules across school.</p>
     </div>
-  </div>
+  </section>
 
-  <div class="features">
-    <div class="feature">
-      <i class="fas fa-shield-alt"></i>
-      <h3>Secure</h3>
-      <p>Protected voting</p>
+  <!-- Gallery Section -->
+  <section class="gallery-section">
+    <h2 class="section-title">Our Voting Process</h2>
+    <div class="gallery-container">
+      <div class="gallery-track">
+        <div class="gallery-item">
+          <img src="Balot.jpg" alt="Student voting">
+        </div>
+        <div class="gallery-item">
+          <img src="https://images.unsplash.com/photo-1573164713714-d95e436ab8d6?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Election booth">
+        </div>
+        <div class="gallery-item">
+          <img src="Balot2.jpg" alt="Voting results">
+        </div>
+        <div class="gallery-item">
+          <img src="Balot3.jpg" alt="Student election">
+        </div>
+        <div class="gallery-item">
+          <img src="Balot4.jpg" alt="Ballot box">
+        </div>
+        <div class="gallery-item">
+          <img src="Balot5.jpg" alt="Voting technology">
+        </div>
+        <div class="gallery-item">
+          <img src="https://images.unsplash.com/photo-1552664688-cf412ec27db2?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Election campaign">
+        </div>
+        <div class="gallery-item">
+          <img src="Recognition.png" alt="Secure voting">
+        </div>
+        <!-- Duplicate items for seamless looping -->
+        <div class="gallery-item">
+          <img src="Balot.jpg" alt="Student voting">
+        </div>
+        <div class="gallery-item">
+          <img src="https://images.unsplash.com/photo-1573164713714-d95e436ab8d6?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Election booth">
+        </div>
+        <div class="gallery-item">
+          <img src="Balot2.jpg" alt="Voting results">
+        </div>
+        <div class="gallery-item">
+          <img src="Balot3.jpg" alt="Student election">
+        </div>
+      </div>
     </div>
-    <div class="feature">
-      <i class="fas fa-user-lock"></i>
-      <h3>Private</h3>
-      <p>Anonymous ballots</p>
+    <div class="gallery-controls">
+      <button class="gallery-control-btn" id="prevBtn"><i class="fas fa-chevron-left"></i> Previous</button>
+      <button class="gallery-control-btn" id="nextBtn">Next <i class="fas fa-chevron-right"></i></button>
     </div>
-    <div class="feature">
-      <i class="fas fa-bolt"></i>
-      <h3>Fast</h3>
-      <p>Quick results</p>
+  </section>
+
+  <!-- About Section -->
+  <section class="about">
+    <h2><i class="fas fa-info-circle"></i> About Campus Elect</h2>
+    <p>
+      Campus Elect is a secure and reliable digital voting system designed specifically for educational institutions.  
+      It ensures transparency, fairness, and accessibility for all students through cutting-edge facial recognition technology
+      and strong encryption protocols. Your vote is always protected and your identity remains confidential throughout the process.
+    </p>
+  </section>
+
+  <!-- Steps Section -->
+  <section class="steps-section">
+    <h2 class="section-title">How It Works</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="step-icon">
+          <i class="fas fa-user-plus"></i>
+        </div>
+        <h3>Register</h3>
+        <p>Sign up as a verified student voter</p>
+      </div>
+      <div class="step">
+        <div class="step-icon">
+          <i class="fas fa-sign-in-alt"></i>
+        </div>
+        <h3>Login</h3>
+        <p>Securely access your voting account</p>
+      </div>
+      <div class="step">
+        <div class="step-icon">
+          <i class="fas fa-vote-yea"></i>
+        </div>
+        <h3>Vote</h3>
+        <p>Select your preferred candidates</p>
+      </div>
+      <div class="step">
+        <div class="step-icon">
+          <i class="fas fa-chart-line"></i>
+        </div>
+        <h3>Results</h3>
+        <p>View transparent, real-time outcomes</p>
+      </div>
     </div>
-    <div class="feature">
-      <i class="fas fa-mobile-alt"></i>
-      <h3>Mobile</h3>
-      <p>Any device access</p>
-    </div>
-  </div>
+  </section>
 
   <footer>
-    &copy; 2023 eVOTE. All rights reserved.
+    <p>&copy; 2023 Campus Elect. All rights reserved.</p>
   </footer>
 
   <script>
-    // Countdown timer
-    function updateCountdown() {
-      const targetDate = new Date('September 15, 2023 00:00:00').getTime();
-      const now = new Date().getTime();
-      const distance = targetDate - now;
+    // Horizontal gallery functionality with infinite loop
+    document.addEventListener('DOMContentLoaded', function() {
+      const galleryTrack = document.querySelector('.gallery-track');
+      const galleryItems = document.querySelectorAll('.gallery-item');
+      const prevBtn = document.getElementById('prevBtn');
+      const nextBtn = document.getElementById('nextBtn');
       
-      if (distance > 0) {
-        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+      let currentPosition = 0;
+      let scrollAmount = 345; // Width of item + gap
+      let autoScrollInterval;
+      let isScrolling = true;
+      
+      // Calculate the point where we should reset to create the loop effect
+      const originalItemsCount = 8; // Number of original items (not including duplicates)
+      const loopThreshold = originalItemsCount * scrollAmount;
+
+      // Function to move gallery
+      function moveGallery(direction) {
+        currentPosition += direction * scrollAmount;
         
-        document.getElementById('days').textContent = days.toString().padStart(2, '0');
-        document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
-        document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
-        document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
-      } else {
-        document.querySelector('.countdown').innerHTML = '<div class="countdown-ended">Voting is not yet Open</div>';
+        // Check if we need to loop back to the beginning
+        if (currentPosition <= -loopThreshold) {
+          currentPosition += loopThreshold;
+          galleryTrack.style.transition = 'none';
+          galleryTrack.style.transform = `translateX(${currentPosition}px)`;
+          
+          // Force a reflow
+          void galleryTrack.offsetWidth;
+          
+          // Re-enable transition
+          galleryTrack.style.transition = 'transform 0.5s ease';
+        } 
+        // Check if we need to loop to the end when going backwards
+        else if (currentPosition > 0) {
+          currentPosition -= loopThreshold;
+          galleryTrack.style.transition = 'none';
+          galleryTrack.style.transform = `translateX(${currentPosition}px)`;
+          
+          // Force a reflow
+          void galleryTrack.offsetWidth;
+          
+          // Re-enable transition
+          galleryTrack.style.transition = 'transform 0.5s ease';
+        }
+        
+        galleryTrack.style.transform = `translateX(${currentPosition}px)`;
       }
-    }
-    
-    // Initial call and set interval
-    updateCountdown();
-    setInterval(updateCountdown, 1000);
-    
-    // Add hover effect to features
-    const features = document.querySelectorAll('.feature');
-    features.forEach(feature => {
-      feature.addEventListener('mouseenter', () => {
-        feature.style.background = 'rgba(255,255,255,0.2)';
+
+      // Set up button events
+      prevBtn.addEventListener('click', () => {
+        moveGallery(1);
+        // Reset auto-scroll timer
+        resetAutoScroll();
       });
-      feature.addEventListener('mouseleave', () => {
-        feature.style.background = 'rgba(255,255,255,0.1)';
+      
+      nextBtn.addEventListener('click', () => {
+        moveGallery(-1);
+        // Reset auto-scroll timer
+        resetAutoScroll();
+      });
+
+      // Auto-scroll functionality
+      function startAutoScroll() {
+        autoScrollInterval = setInterval(() => {
+          moveGallery(-1);
+        }, 5000); // Scroll every 5 seconds
+      }
+
+      // Reset auto-scroll timer
+      function resetAutoScroll() {
+        clearInterval(autoScrollInterval);
+        startAutoScroll();
+      }
+
+      // Start auto-scrolling
+      startAutoScroll();
+
+      // Pause auto-scroll on hover
+      const galleryContainer = document.querySelector('.gallery-container');
+      galleryContainer.addEventListener('mouseenter', () => {
+        clearInterval(autoScrollInterval);
+        isScrolling = false;
+      });
+      
+      galleryContainer.addEventListener('mouseleave', () => {
+        if (!isScrolling) {
+          startAutoScroll();
+          isScrolling = true;
+        }
       });
     });
   </script>

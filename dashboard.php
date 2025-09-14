@@ -370,7 +370,7 @@ $fullName = isset($_SESSION['full_name']) ? $_SESSION['full_name'] : "User";
     </div>
   </header>
 
-  <!-- Main Content -->
+  
   <div class="main">
     <div class="welcome-section">
       <h1>Student Verification</h1>
