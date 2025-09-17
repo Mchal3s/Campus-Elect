@@ -358,17 +358,24 @@ $fullName = isset($_SESSION['full_name']) ? $_SESSION['full_name'] : "User";
   <div id="particles-container"></div>
 
   <!-- Header -->
-  <header>
-    <div class="logo">
-      <h1>eVOTE<span>.</span></h1>
+<header>
+  <div class="logo">
+    <h1>eVOTE<span>.</span></h1>
+  </div>
+  <div class="user-info">
+    <!-- Countdown Timer -->
+    <div class="countdown">
+      <span id="days">00</span>d :
+      <span id="hours">07</span>h :
+      <span id="minutes">34</span>m :
+      <span id="seconds">55</span>s
     </div>
-    <div class="user-info">
-      <p>Welcome, <?php echo htmlspecialchars($fullName); ?></p>
-      <button class="logout-btn" onclick="showLogoutModal()">
-        <i class="fas fa-sign-out-alt"></i> Logout
-      </button>
-    </div>
-  </header>
+
+    <button class="dashboard-btn" onclick="window.location.href='analysis.php'">
+      <i class="fas fa-tachometer-alt"></i> Dashboard
+    </button>
+  </div>
+</header>
 
   
   <div class="main">

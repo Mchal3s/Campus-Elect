@@ -92,6 +92,29 @@
       font-weight: 500;
     }
     
+    /* Login button */
+    .login-btn {
+      background: var(--primary); 
+      color: white;
+      padding: 12px 30px;
+      border-radius: 8px; 
+      font-weight: 600;
+      font-size: 1rem; 
+      cursor: pointer;
+      border: none;
+      transition: var(--transition);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: var(--card-shadow);
+    }
+    
+    .login-btn:hover { 
+      background: var(--primary-dark); 
+      transform: translateY(-2px); 
+      box-shadow: 0 10px 25px -5px rgba(37, 99, 235, 0.3);
+    }
+    
     /* Hero section */
     .hero {
       width: 100%;
@@ -122,12 +145,6 @@
       color: var(--gray);
       max-width: 800px;
       margin-bottom: 30px;
-    }
-    
-    .hero-cta {
-      display: flex;
-      gap: 20px;
-      margin-top: 20px;
     }
     
     /* Notice section */
@@ -181,29 +198,6 @@
       font-weight: 700;
     }
 
-    /* Login button */
-    .login-btn {
-      background: var(--primary); 
-      color: white;
-      padding: 16px 40px;
-      border-radius: 12px; 
-      font-weight: 600;
-      font-size: 1.1rem; 
-      cursor: pointer;
-      border: none;
-      transition: var(--transition);
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      box-shadow: var(--card-shadow);
-    }
-    
-    .login-btn:hover { 
-      background: var(--primary-dark); 
-      transform: translateY(-2px); 
-      box-shadow: 0 10px 25px -5px rgba(37, 99, 235, 0.3);
-    }
-    
     /* Gallery section */
     .gallery-section {
       width: 100%;
@@ -390,6 +384,148 @@
       color: white;
     }
     
+    /* Modal Styles */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.6);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+      backdrop-filter: blur(5px);
+    }
+    
+    .modal-content {
+      background: white;
+      padding: 30px;
+      border-radius: 16px;
+      width: 90%;
+      max-width: 450px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+      position: relative;
+      animation: modalFadeIn 0.3s ease;
+    }
+    
+    @keyframes modalFadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .close-modal {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: var(--gray);
+      transition: var(--transition);
+    }
+    
+    .close-modal:hover {
+      color: var(--dark);
+    }
+    
+    .modal-logo {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    
+    .modal-logo h2 {
+      color: var(--primary);
+      font-size: 1.8rem;
+      font-weight: 700;
+    }
+    
+    .modal-logo p {
+      color: var(--gray);
+      font-size: 0.9rem;
+    }
+    
+    .modal-form {
+      margin-top: 20px;
+    }
+    
+    .form-group {
+      margin-bottom: 20px;
+      text-align: left;
+    }
+    
+    .form-group label {
+      display: block;
+      font-weight: 500;
+      margin-bottom: 8px;
+      color: var(--dark);
+    }
+    
+    .form-group input, 
+    .form-group select {
+      width: 100%;
+      padding: 12px 15px;
+      border: 1px solid var(--light-gray);
+      border-radius: 8px;
+      font-family: 'Inter', sans-serif;
+      transition: var(--transition);
+    }
+    
+    .form-group input:focus, 
+    .form-group select:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    }
+    
+    .modal-btn {
+      background: var(--primary);
+      color: white;
+      padding: 12px;
+      border: none;
+      width: 100%;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: var(--transition);
+      margin-top: 10px;
+    }
+    
+    .modal-btn:hover {
+      background: var(--primary-dark);
+    }
+    
+    .modal-footer {
+      text-align: center;
+      font-size: 0.9rem;
+      color: var(--gray);
+      margin-top: 20px;
+    }
+    
+    .modal-footer a {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 500;
+    }
+    
+    .modal-footer a:hover {
+      text-decoration: underline;
+    }
+    
+    .error-message {
+      color: #e53e3e;
+      text-align: center;
+      margin-bottom: 15px;
+      font-size: 0.9rem;
+      display: none;
+    }
+    
     /* Responsive design */
     @media (max-width: 992px) {
       .hero h1 {
@@ -450,13 +586,14 @@
         width: 280px;
         height: 200px;
       }
+      
+      .modal-content {
+        width: 95%;
+        padding: 20px;
+      }
     }
     
     @media (max-width: 576px) {
-      .hero-cta {
-        flex-direction: column;
-      }
-      
       .gallery-controls {
         flex-direction: column;
         align-items: center;
@@ -480,15 +617,15 @@
       <h1>Campus Elect</h1>
       <p>Secure School Voting System</p>
     </div>
-    <button class="login-btn" onclick="window.location.href='login.php'">
-      <i class="fas fa-lock"></i> Login to Vote
+    <button class="login-btn" id="openLoginModal">
+      <i class="fas fa-lock"></i> Access Portal
     </button>
   </header>
 
   <!-- Hero Section -->
   <section class="hero">
     <div class="hero-content">
-      <h1>Modern Voting for <span class="notice-highlight">Modern Education</span></h1>
+      <h1> Contemporary voting approach in <span class="notice-highlight">Modern Education</span></h1>
       <p>Empowering schools with secure, transparent, and accessible digital voting solutions powered by facial recognition technology.</p>
     </div>
   </section>
@@ -601,7 +738,142 @@
     <p>&copy; 2023 Campus Elect. All rights reserved.</p>
   </footer>
 
+  <!-- Login Modal -->
+  <div class="modal" id="loginModal">
+    <div class="modal-content">
+      <span class="close-modal" id="closeModal">&times;</span>
+      
+      <div class="modal-logo">
+        <h2>Campus Elect</h2>
+        <p>School Voting System</p>
+      </div>
+      
+      <div class="error-message" id="errorMessage"></div>
+      
+      <form method="POST" action="login.php" id="loginForm" class="modal-form">
+        <div class="form-group">
+          <label for="roleSelect">Role</label>
+          <select name="role" id="roleSelect" required onchange="toggleLoginFields()">
+            <option value="">--Select Role--</option>
+            <option value="admin">Admin</option>
+            <option value="proctor">Proctor</option>
+            <option value="student">Student</option>
+          </select>
+        </div>
+
+        <div id="adminProctorFields">
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" name="email" id="email">
+          </div>
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" name="password" id="password">
+          </div>
+        </div>
+
+        <div id="studentFields" style="display:none;">
+          <div class="form-group">
+            <label for="student_id">Student ID</label>
+            <input type="text" name="student_id" id="student_id">
+          </div>
+        </div>
+
+        <button type="submit" class="modal-btn">Login</button>
+        
+        <div class="modal-footer">
+          <p>Not yet Registered? <a href="register.php">Register</a></p>
+        </div>
+      </form>
+    </div>
+  </div>
+
   <script>
+    // Modal functionality
+    const modal = document.getElementById('loginModal');
+    const openModalBtn = document.getElementById('openLoginModal');
+    const closeModalBtn = document.getElementById('closeModal');
+    const errorMessage = document.getElementById('errorMessage');
+    
+    // Open modal
+    openModalBtn.addEventListener('click', () => {
+      modal.style.display = 'flex';
+      document.body.style.overflow = 'hidden'; // Prevent scrolling
+    });
+    
+    // Close modal
+    closeModalBtn.addEventListener('click', () => {
+      modal.style.display = 'none';
+      document.body.style.overflow = 'auto'; // Enable scrolling
+      clearError();
+    });
+    
+    // Close modal when clicking outside
+    window.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        modal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+        clearError();
+      }
+    });
+    
+    // Clear error message
+    function clearError() {
+      errorMessage.style.display = 'none';
+      errorMessage.textContent = '';
+    }
+    
+    // Show error message
+    function showError(message) {
+      errorMessage.textContent = message;
+      errorMessage.style.display = 'block';
+    }
+    
+    // Toggle login fields based on role selection
+    function toggleLoginFields() {
+      const role = document.getElementById('roleSelect').value;
+      document.getElementById('adminProctorFields').style.display = (role === "student") ? "none" : "block";
+      document.getElementById('studentFields').style.display = (role === "student") ? "block" : "none";
+      clearError();
+    }
+    
+    // Form submission
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const role = document.getElementById('roleSelect').value;
+      let isValid = true;
+      let errorMsg = '';
+      
+      if (!role) {
+        isValid = false;
+        errorMsg = 'Please select a role.';
+      } else if (role === 'admin' || role === 'proctor') {
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        
+        if (!email || !password) {
+          isValid = false;
+          errorMsg = 'Please fill all fields.';
+        }
+      } else if (role === 'student') {
+        const studentId = document.getElementById('student_id').value;
+        
+        if (!studentId) {
+          isValid = false;
+          errorMsg = 'Please enter your Student ID.';
+        }
+      }
+      
+      if (!isValid) {
+        showError(errorMsg);
+        return;
+      }
+      
+      // If validation passes, submit the form
+      this.submit();
+    });
+    
     // Horizontal gallery functionality with infinite loop
     document.addEventListener('DOMContentLoaded', function() {
       const galleryTrack = document.querySelector('.gallery-track');
