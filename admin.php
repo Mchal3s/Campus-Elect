@@ -118,6 +118,17 @@ $ongoingElections = $conn->query("SELECT COUNT(*) AS cnt FROM elections WHERE st
     <a href="logout.php" class="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a>
   </header>
 
+  
+<!-- Inside .content -->
+<div class="card">
+  <h2>Election Timer</h2>
+  <form method="POST" action="set_timer.php">
+    <label>Set Voting End Time:</label><br>
+    <input type="datetime-local" name="end_time" required>
+    <button type="submit" class="logout-btn">Set Timer</button>
+  </form>
+</div>
+
   <div class="dashboard">
     <!-- Sidebar -->
     <div class="sidebar">

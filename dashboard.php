@@ -364,12 +364,8 @@ $fullName = isset($_SESSION['full_name']) ? $_SESSION['full_name'] : "User";
   </div>
   <div class="user-info">
     <!-- Countdown Timer -->
-    <div class="countdown">
-      <span id="days">00</span>d :
-      <span id="hours">07</span>h :
-      <span id="minutes">34</span>m :
-      <span id="seconds">55</span>s
-    </div>
+   <div class="countdown" id="countdown"></div>
+
 
     <button class="dashboard-btn" onclick="window.location.href='analysis.php'">
       <i class="fas fa-tachometer-alt"></i> Dashboard
@@ -426,6 +422,56 @@ $fullName = isset($_SESSION['full_name']) ? $_SESSION['full_name'] : "User";
   </div>
 
   <script>
+    async function fetchTimer() {
+  const res = await fetch("get_timer.php");
+  const data = await res.json();
+  if (!data.end_time) {
+    document.getElementById("countdown").textContent = "No active election timer";
+    return null;
+  }
+  return new Date(data.end_time).getTime();
+}
+
+async function startCountdown() {
+  const endTime = await fetchTimer();
+  if (!endTime) return;
+
+  const countdownEl = document.getElementById("countdown");
+  const modal = document.createElement("div");
+
+  const interval = setInterval(() => {
+    const now = new Date().getTime();
+    const distance = endTime - now;
+
+    if (distance <= 0) {
+      clearInterval(interval);
+      countdownEl.textContent = "Voting Closed";
+      
+      // Show modal
+      modal.innerHTML = `
+        <div style="position:fixed;top:0;left:0;width:100%;height:100%;
+          background:rgba(0,0,0,0.8);display:flex;align-items:center;
+          justify-content:center;z-index:200;">
+          <div style="background:white;color:#1e3a8a;padding:30px;
+            border-radius:12px;text-align:center;max-width:400px;">
+            <h2>Voting has ended!</h2>
+            <p>Please wait for results to be published.</p>
+          </div>
+        </div>
+      `;
+      document.body.appendChild(modal);
+    } else {
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+      countdownEl.textContent = `${days}d : ${hours}h : ${minutes}m : ${seconds}s`;
+    }
+  }, 1000);
+}
+
+startCountdown();
+
     // Create floating particles
     function createParticles() {
       const container = document.getElementById('particles-container');

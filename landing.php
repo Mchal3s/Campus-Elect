@@ -1,3 +1,53 @@
+<?php
+session_start();
+include 'db.php'; // Your DB connection file
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $identifier = trim($_POST['identifier']);
+    $password   = trim($_POST['password']);
+
+    if (empty($identifier) || empty($password)) {
+        echo "Please fill in all fields.";
+        exit;
+    }
+
+    // Prepare SQL: check both email and student_id
+    $sql = "SELECT * FROM users WHERE email = ? OR student_id = ? LIMIT 1";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("ss", $identifier, $identifier);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows === 1) {
+        $user = $result->fetch_assoc();
+
+        // Verify password
+        if (password_verify($password, $user['password'])) {
+            // Store session
+            $_SESSION['user_id']   = $user['user_id'];
+            $_SESSION['full_name'] = $user['full_name'];
+            $_SESSION['role']      = $user['role'];
+            $_SESSION['verified']  = $user['verified'];
+            
+            // Redirect based on role
+            if ($user['role'] === 'admin') {
+                header("Location: admin.php");
+            } elseif ($user['role'] === 'proctor') {
+                header("Location:dashboard.php");
+            } else {
+                header("Location: student_dashboard.php");
+            }
+            exit;
+        } else {
+            echo "Invalid password.";
+        }
+    } else {
+        echo "No user found with that email or student ID.";
+    }
+}
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -739,139 +789,87 @@
   </footer>
 
   <!-- Login Modal -->
-  <div class="modal" id="loginModal">
-    <div class="modal-content">
-      <span class="close-modal" id="closeModal">&times;</span>
-      
-      <div class="modal-logo">
-        <h2>Campus Elect</h2>
-        <p>School Voting System</p>
-      </div>
-      
-      <div class="error-message" id="errorMessage"></div>
-      
-      <form method="POST" action="login.php" id="loginForm" class="modal-form">
-        <div class="form-group">
-          <label for="roleSelect">Role</label>
-          <select name="role" id="roleSelect" required onchange="toggleLoginFields()">
-            <option value="">--Select Role--</option>
-            <option value="admin">Admin</option>
-            <option value="proctor">Proctor</option>
-            <option value="student">Student</option>
-          </select>
-        </div>
-
-        <div id="adminProctorFields">
-          <div class="form-group">
-            <label for="email">Email</label>
-            <input type="email" name="email" id="email">
-          </div>
-          <div class="form-group">
-            <label for="password">Password</label>
-            <input type="password" name="password" id="password">
-          </div>
-        </div>
-
-        <div id="studentFields" style="display:none;">
-          <div class="form-group">
-            <label for="student_id">Student ID</label>
-            <input type="text" name="student_id" id="student_id">
-          </div>
-        </div>
-
-        <button type="submit" class="modal-btn">Login</button>
-        
-        <div class="modal-footer">
-          <p>Not yet Registered? <a href="register.php">Register</a></p>
-        </div>
-      </form>
+  <!-- Login Modal -->
+<div class="modal" id="loginModal">
+  <div class="modal-content">
+    <span class="close-modal" id="closeModal">&times;</span>
+    
+    <div class="modal-logo">
+      <h2>Campus Elect</h2>
+      <p>School Voting System</p>
     </div>
+    
+    <div class="error-message" id="errorMessage"></div>
+    
+    <form method="POST" id="loginForm" class="modal-form">
+      <div class="form-group">
+        <label for="identifier">Email or Student ID</label>
+        <input type="text" name="identifier" id="identifier" required>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" name="password" id="password" required>
+      </div>
+
+      <button type="submit" class="modal-btn">Login</button>
+      
+      <div class="modal-footer">
+        <p>Not yet Registered? <a href="register.php">Register</a></p>
+      </div>
+    </form>
   </div>
+</div>
 
   <script>
-    // Modal functionality
-    const modal = document.getElementById('loginModal');
-    const openModalBtn = document.getElementById('openLoginModal');
-    const closeModalBtn = document.getElementById('closeModal');
-    const errorMessage = document.getElementById('errorMessage');
-    
-    // Open modal
-    openModalBtn.addEventListener('click', () => {
-      modal.style.display = 'flex';
-      document.body.style.overflow = 'hidden'; // Prevent scrolling
-    });
-    
-    // Close modal
-    closeModalBtn.addEventListener('click', () => {
+   // Modal functionality remains the same
+  const modal = document.getElementById('loginModal');
+  const openModalBtn = document.getElementById('openLoginModal');
+  const closeModalBtn = document.getElementById('closeModal');
+  const errorMessage = document.getElementById('errorMessage');
+  
+  // Open modal
+  openModalBtn.addEventListener('click', () => {
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+  });
+  
+  // Close modal
+  closeModalBtn.addEventListener('click', () => {
+    modal.style.display = 'none';
+    document.body.style.overflow = 'auto';
+    clearError();
+  });
+  
+  // Close when clicking outside
+  window.addEventListener('click', (e) => {
+    if (e.target === modal) {
       modal.style.display = 'none';
-      document.body.style.overflow = 'auto'; // Enable scrolling
-      clearError();
-    });
-    
-    // Close modal when clicking outside
-    window.addEventListener('click', (e) => {
-      if (e.target === modal) {
-        modal.style.display = 'none';
-        document.body.style.overflow = 'auto';
-        clearError();
-      }
-    });
-    
-    // Clear error message
-    function clearError() {
-      errorMessage.style.display = 'none';
-      errorMessage.textContent = '';
-    }
-    
-    // Show error message
-    function showError(message) {
-      errorMessage.textContent = message;
-      errorMessage.style.display = 'block';
-    }
-    
-    // Toggle login fields based on role selection
-    function toggleLoginFields() {
-      const role = document.getElementById('roleSelect').value;
-      document.getElementById('adminProctorFields').style.display = (role === "student") ? "none" : "block";
-      document.getElementById('studentFields').style.display = (role === "student") ? "block" : "none";
+      document.body.style.overflow = 'auto';
       clearError();
     }
-    
-    // Form submission
-    document.getElementById('loginForm').addEventListener('submit', function(e) {
+  });
+  
+  // Error handling
+  function clearError() {
+    errorMessage.style.display = 'none';
+    errorMessage.textContent = '';
+  }
+  function showError(message) {
+    errorMessage.textContent = message;
+    errorMessage.style.display = 'block';
+  }
+  
+  // Form validation
+  document.getElementById('loginForm').addEventListener('submit', function(e) {
+    const identifier = document.getElementById('identifier').value.trim();
+    const password = document.getElementById('password').value.trim();
+
+    if (!identifier || !password) {
       e.preventDefault();
-      
-      const role = document.getElementById('roleSelect').value;
-      let isValid = true;
-      let errorMsg = '';
-      
-      if (!role) {
-        isValid = false;
-        errorMsg = 'Please select a role.';
-      } else if (role === 'admin' || role === 'proctor') {
-        const email = document.getElementById('email').value;
-        const password = document.getElementById('password').value;
-        
-        if (!email || !password) {
-          isValid = false;
-          errorMsg = 'Please fill all fields.';
-        }
-      } else if (role === 'student') {
-        const studentId = document.getElementById('student_id').value;
-        
-        if (!studentId) {
-          isValid = false;
-          errorMsg = 'Please enter your Student ID.';
-        }
-      }
-      
-      if (!isValid) {
-        showError(errorMsg);
-        return;
-      }
-      
-      // If validation passes, submit the form
-      this.submit();
+      showError('Please fill in both fields.');
+      return;
+    }
     });
     
     // Horizontal gallery functionality with infinite loop
